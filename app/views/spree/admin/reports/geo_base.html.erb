@@ -27,9 +27,9 @@
 <% end -%>
 
 <% content_for :head do -%>
-    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="//www.google.com/jsapi"></script>
     <script type="text/javascript">
-        google.load('visualization', '1', {'packages': ['geomap']});        
+        google.load('visualization', '1', {'packages': ['geomap']});
     </script>
     <script type="text/javascript">
         google.setOnLoadCallback(drawMaps);
@@ -46,7 +46,7 @@ data_<%= type.to_s %>.setValue(<%= i.to_s %>, 1, <%= p.data[@report.column].to_s
         <% end -%>
 
 var options_<%= type.to_s %> = { 'width' : '800px', 'height' : '500px' };
-<% if type == :state %> 
+<% if type == :state %>
     options_<%= type.to_s %>['region'] = 'US';
         <% end -%>
 
