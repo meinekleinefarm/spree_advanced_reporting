@@ -37,7 +37,9 @@ class Spree::AdvancedReport::IncrementReport < Spree::AdvancedReport
   def generate_ruport_data
     self.all_data = Table(%w[increment key display value]) 
     INCREMENTS.each do |inc|
-      data[inc].each { |k,v| ruportdata[inc] << { "key" => k, "display" => v[:display], "value" => v[:value] } }
+      data[inc].each do |k,v|
+        ruportdata[inc] << { "key" => k, "display" => v[:display], "value" => v[:value] }
+      end
       ruportdata[inc].data.each do |p|
         self.all_data << { "increment" => inc.to_s.capitalize, "key" => p.data["key"], "display" => p.data["display"], "value" => p.data["value"] }
       end
@@ -72,6 +74,6 @@ class Spree::AdvancedReport::IncrementReport < Spree::AdvancedReport
   end
 
   def format_total
-    self.total 
+    number_to_currency(self.total, unit: Spree::Config.currency)
   end
 end
