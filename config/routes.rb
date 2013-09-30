@@ -18,7 +18,7 @@
   match '/admin/reports/profit' => 'admin/reports#profit',  :via => [:get, :post],
                                                             :as  => 'profit_admin_reports'
 
-  match '/admin/reports/revenue' => 'admin/reports#carts',  :via  => [:get, :post],
+  match '/admin/reports/carts' => 'admin/reports#carts',  :via  => [:get, :post],
                                                               :as   => 'carts_admin_reports'
 
   match '/admin/reports/top_customers' => 'admin/reports#top_customers',  :via  => [:get, :post],
