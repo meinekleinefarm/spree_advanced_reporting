@@ -9,6 +9,7 @@ de:
     revenue: "Umsatz"
     units: "Einheiten"
     profit: "Profit"
+    carts: "Warenkorb"
     count: "Bestellungen"
     top_products: "Top Produkte"
     top_customers: "Top Kunden"

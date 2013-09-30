@@ -74,6 +74,11 @@ Spree::Admin::ReportsController.class_eval do
     end
   end
 
+  def carts
+    @report = Spree::AdvancedReport::IncrementReport::Carts.new(params)
+    base_report_render("carts")
+  end
+
   def revenue
     @report = Spree::AdvancedReport::IncrementReport::Revenue.new(params)
     base_report_render("revenue")
