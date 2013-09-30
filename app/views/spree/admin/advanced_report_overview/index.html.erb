@@ -78,7 +78,7 @@
                 data_<%= type.to_s %>.addRows(<%= @report.ruportdata[type].size %>);
                 <% @report.ruportdata[type].each_with_index do |p, i| %>
                     data_<%= type.to_s %>.setValue(<%= i.to_s %>, 0, "<%= p.data[type.to_s.capitalize] %>");
-                    data_<%= type.to_s %>.setValue(<%= i.to_s %>, 1, <%= p.data[@report.column].to_s.gsub(/^\$/, '') %>);
+                    data_<%= type.to_s %>.setValue(<%= i.to_s %>, 1, <%= p.data[@report.column].to_s.gsub(/#{Spree::Config.currency}/, '').strip.gsub(/\,(\d{2})$/,'.\1') %>);
                 <% end -%>
                 var chart_<%= type.to_s %> = new google.visualization.ColumnChart(document.getElementById('<%= type.to_s %>_chart_revenue'));
                 chart_<%= type.to_s %>.draw(data_<%= type.to_s %>, {
@@ -94,7 +94,7 @@
             product_data.addRows(<%= @top_products_report.ruportdata.size %>);
             <% @top_products_report.ruportdata.each_with_index do |p, i| %>
                 product_data.setValue(<%= i.to_s %>, 0, "<%= p.data["Product Name"].gsub('"', '\"') %>");
-                product_data.setValue(<%= i.to_s %>, 1, <%= p.data["Revenue"].to_s.gsub(/^\$/, '') %>);
+                product_data.setValue(<%= i.to_s %>, 1, <%= p.data["Revenue"].to_s.gsub(/#{Spree::Config.currency}/, '').strip.gsub(/\,(\d{2})$/,'.\1') %>);
             <% end -%>
 
             var chart = new google.visualization.PieChart(document.getElementById('top_products_chart'));
