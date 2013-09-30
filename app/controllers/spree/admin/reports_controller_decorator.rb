@@ -1,6 +1,6 @@
 Spree::Admin::ReportsController.class_eval do
-  before_filter :add_own 
-  before_filter :basic_report_setup, :actions => [:profit, :revenue, :units, :top_products, :top_customers, :geo_revenue, :geo_units, :count]
+  before_filter :add_own
+  before_filter :basic_report_setup, :actions => [:profit, :revenue, :carts, :units, :top_products, :top_customers, :geo_revenue, :geo_units, :count]
 
   def add_own
     return if Spree::Admin::ReportsController::AVAILABLE_REPORTS.has_key?(:geo_profit)
@@ -10,11 +10,11 @@ Spree::Admin::ReportsController.class_eval do
   I18n.reload!
 
   ADVANCED_REPORTS ||= {}
-  [ :revenue, :units, :profit, :count, :top_products, :top_customers, :geo_revenue, :geo_units, :geo_profit].each do |x|
+  [ :revenue, :carts, :units, :profit, :count, :top_products, :top_customers, :geo_revenue, :geo_units, :geo_profit].each do |x|
     ADVANCED_REPORTS[x]= {name: I18n.t("adv_report."+x.to_s), :description => I18n.t("adv_report."+x.to_s)}
   end
 
-   
+
   def basic_report_setup
     @reports = ADVANCED_REPORTS
     @products = Spree::Product.all
