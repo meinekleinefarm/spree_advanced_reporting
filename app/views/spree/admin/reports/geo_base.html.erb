@@ -42,7 +42,7 @@ data_<%= type.to_s %>.addColumn('string', '<%= type.to_s.capitalize %>');
 data_<%= type.to_s %>.addColumn('number', '<%= @report.column %>');
 <% @report.ruportdata[type].each_with_index do |p, i| %>
     data_<%= type.to_s %>.setValue(<%= i.to_s %>, 0, "<%= p.data[type.to_s.capitalize] %>");
-data_<%= type.to_s %>.setValue(<%= i.to_s %>, 1, <%= p.data[@report.column].to_s.gsub(/#{Spree::Config.currency}/, '').strip.gsub(/\,(\d{2})$/,'.\1') %>);
+data_<%= type.to_s %>.setValue(<%= i.to_s %>, 1, <%= p.data[@report.column].to_s.gsub(/#{Spree::Config.currency}/, '') %>);
         <% end -%>
 
 var options_<%= type.to_s %> = { 'width' : '800px', 'height' : '500px' };

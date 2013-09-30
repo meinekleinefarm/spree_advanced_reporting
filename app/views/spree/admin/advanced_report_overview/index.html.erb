@@ -37,7 +37,7 @@
                             <td><%=link_to order[3], admin_order_path(:id => order[3]) %></td>
                             <td><%= order[0] %></td>
                             <td><%= order[1] %></td>
-                            <td><%= number_to_currency order[2] %></td>
+                            <td><%= number_to_currency order[2], :unit => Spree::Config.currency, :delimiter => nil, :separator => '.' %></td>
                         </tr>
                     <% end -%>
                 </table>
@@ -78,7 +78,7 @@
                 data_<%= type.to_s %>.addRows(<%= @report.ruportdata[type].size %>);
                 <% @report.ruportdata[type].each_with_index do |p, i| %>
                     data_<%= type.to_s %>.setValue(<%= i.to_s %>, 0, "<%= p.data[type.to_s.capitalize] %>");
-                    data_<%= type.to_s %>.setValue(<%= i.to_s %>, 1, <%= p.data[@report.column].to_s.gsub(/#{Spree::Config.currency}/, '').strip.gsub(/\,(\d{2})$/,'.\1') %>);
+                    data_<%= type.to_s %>.setValue(<%= i.to_s %>, 1, <%= p.data[@report.column].to_s.gsub(/#{Spree::Config.currency}/, '') %>);
                 <% end -%>
                 var chart_<%= type.to_s %> = new google.visualization.ColumnChart(document.getElementById('<%= type.to_s %>_chart_revenue'));
                 chart_<%= type.to_s %>.draw(data_<%= type.to_s %>, {
@@ -94,7 +94,7 @@
             product_data.addRows(<%= @top_products_report.ruportdata.size %>);
             <% @top_products_report.ruportdata.each_with_index do |p, i| %>
                 product_data.setValue(<%= i.to_s %>, 0, "<%= p.data["Product Name"].gsub('"', '\"') %>");
-                product_data.setValue(<%= i.to_s %>, 1, <%= p.data["Revenue"].to_s.gsub(/#{Spree::Config.currency}/, '').strip.gsub(/\,(\d{2})$/,'.\1') %>);
+                product_data.setValue(<%= i.to_s %>, 1, <%= p.data["Revenue"].to_s.gsub(/#{Spree::Config.currency}/, '') %>);
             <% end -%>
 
             var chart = new google.visualization.PieChart(document.getElementById('top_products_chart'));

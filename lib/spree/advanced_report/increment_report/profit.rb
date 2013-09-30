@@ -34,7 +34,7 @@ class Spree::AdvancedReport::IncrementReport::Profit < Spree::AdvancedReport::In
 
     INCREMENTS.each do |type|
       ruportdata[type].replace_column("Profit") do |r|
-        number_to_currency(r["Profit"], unit: Spree::Config.currency)
+        number_to_currency(r["Profit"], unit: Spree::Config.currency, :delimiter => nil, :separator => '.')
       end
     end
 
