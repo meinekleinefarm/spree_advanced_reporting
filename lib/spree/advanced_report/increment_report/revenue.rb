@@ -1,5 +1,4 @@
 class Spree::AdvancedReport::IncrementReport::Revenue < Spree::AdvancedReport::IncrementReport
-  include ActionView::Helpers::NumberHelper
   def name
     "Revenue"
   end
@@ -38,14 +37,10 @@ class Spree::AdvancedReport::IncrementReport::Revenue < Spree::AdvancedReport::I
 
     generate_ruport_data
 
-    INCREMENTS.each do |type|
-      ruportdata[type].replace_column("Revenue") do |r|
-        number_to_currency(r["Revenue"], unit: Spree::Config.currency)
-      end
-    end
+    INCREMENTS.each { |type| ruportdata[type].replace_column("Revenue") { |r| "$%0.2f" % r["Revenue"] } }
   end
 
   def format_total
-    number_to_currency(self.total, unit: Spree::Config.currency)
+    '$' + ((self.total*100).round.to_f / 100).to_s
   end
 end
