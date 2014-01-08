@@ -59,6 +59,17 @@ class Spree::AdvancedReport::IncrementReport::Carts < Spree::AdvancedReport::Inc
       self.taxon_text = "Taxon: #{self.taxon.name}<br />"
     end
 
+    self.cart_in_status = true
+    if params[:advanced_reporting]
+      if params[:advanced_reporting][:status_name] && params[:advanced_reporting][:status_name] != ''
+        self.status = params[:advanced_reporting][:status_name]
+      end
+    end
+
+    if self.status
+      self.status_text = "Status: #{I18n.t self.status}<br/>"
+    end
+
     # Above searchlogic date settings
     self.date_text = "Date Range:"
     if self.unfiltered_params
@@ -83,23 +94,23 @@ class Spree::AdvancedReport::IncrementReport::Carts < Spree::AdvancedReport::Inc
       :daily => {
         :date_bucket => "%F",
         :date_display => "%m-%d-%Y",
-        :header_display => 'Daily',
+        :header_display => I18n.t('adv_report.daily'),
       },
       :weekly => {
-        :header_display => 'Weekly'
+        :header_display => I18n.t('adv_report.weekly')
       },
       :monthly => {
         :date_bucket => "%Y-%m",
         :date_display => "%B %Y",
-        :header_display => 'Monthly',
+        :header_display => I18n.t('adv_report.monthly'),
       },
       :quarterly => {
-        :header_display => 'Quarterly'
+        :header_display => I18n.t('adv_report.quarterly')
       },
       :yearly => {
         :date_bucket => "%Y",
         :date_display => "%Y",
-        :header_display => 'Yearly',
+        :header_display => I18n.t('adv_report.yearly'),
       }
     }
 
@@ -113,9 +124,9 @@ class Spree::AdvancedReport::IncrementReport::Carts < Spree::AdvancedReport::Inc
           :display => get_display(type, order.created_at),
         }
       end
-      order_count = order_count(order)
-      INCREMENTS.each { |type| data[type][date[type]][:value] += order_count }
-      self.total += order_count
+      cart_count = cart_count(order)
+      INCREMENTS.each { |type| data[type][date[type]][:value] += cart_count }
+      self.total += cart_count
     end
 
     generate_ruport_data

@@ -14,6 +14,7 @@
         <%= @report.description %><br />
         <%== @report.product_text %>
         <%== @report.taxon_text %>
+        <%== @report.status_text %>
         <%= @report.date_text %><br />
         Total: <%= @report.format_total %>
     </div>
@@ -21,7 +22,7 @@
     <ul id="show_data">
         <% @report.increments.each do |inc| %>
             <li <%= 'class=selected' if inc == :daily %> id="<%= inc.to_s %>">
-                <label><%= inc.to_s.capitalize %></label><br />
+                <label><%=  t("adv_report.#{inc}") %></label><br />
                 <a href="<%= @report.download_url(request.fullpath, 'csv', inc.to_s) %>">CSV</a>
             </li>
         <% end -%>

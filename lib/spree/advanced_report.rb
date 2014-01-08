@@ -1,7 +1,7 @@
 module Spree
   class AdvancedReport
     include Ruport
-    attr_accessor :orders, :product_text, :date_text, :taxon_text, :ruportdata, :data, :params, :taxon, :product, :product_in_taxon, :unfiltered_params
+    attr_accessor :orders, :product_text, :date_text, :taxon_text, :status_text, :ruportdata, :data, :params, :taxon, :product, :status, :product_in_taxon, :cart_in_status, :unfiltered_params
 
     def name
       "Base Advanced Report"
@@ -124,6 +124,10 @@ module Spree
 
     def order_count(order)
       self.product_in_taxon ? 1 : 0
+    end
+
+    def cart_count(order)
+      (status.blank? || order.state == status) ? 1 : 0
     end
   end
 end

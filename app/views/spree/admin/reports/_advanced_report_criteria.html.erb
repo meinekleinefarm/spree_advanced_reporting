@@ -8,9 +8,14 @@
 
     <div id="taxon_products">
     <% if @taxons -%>
-        <%=t "taxons"%>: <%= collection_select(:advanced_reporting, :taxon_id, @taxons, :id, :name, { :include_blank => 'All' } ) %>
+        <%=t "taxons"%>: <%= collection_select(:advanced_reporting, :taxon_id, @taxons, :id, :name, { :include_blank => 'All', :selected => params['advanced_reporting']['taxon_id'] } ) %><br />
     <% end -%>
-    <%=t :products%>: <%= collection_select(:advanced_reporting, :product_id, @products, :id, :name, { :include_blank => 'All' } ) %><br />
+    <%=t :products%>: <%= collection_select(:advanced_reporting, :product_id, @products, :id, :name, { :include_blank => 'All', :selected => params['advanced_reporting']['product_id'] } ) %><br />
+    </div>
+    <div id="states">
+      <% if @states -%>
+        <%= t :status %>: <%= select_tag('advanced_reporting[status_name]', options_for_select([['All', '']]+@states.map{|s| [t(s), s]}, params['advanced_reporting']['status_name'])) %><br />
+      <% end -%>
     </div>
 
     <%= t("date_range") %>:
@@ -44,5 +49,8 @@ var completed_at_gt = "<%= (@report.unfiltered_params && @report.unfiltered_para
   <% end -%>
   <% if params[:advanced_reporting][:taxon_id] && params[:advanced_reporting][:taxon_id] != '' -%>
   <input type="hidden" id="taxon_id" value="<%= params[:advanced_reporting][:taxon_id] %>" />
+  <% end -%>
+  <% if params[:advanced_reporting][:status_name] && params[:advanced_reporting][:status_name] != '' -%>
+  <input type="hidden" id="status_name" value="<%= params[:advanced_reporting][:status_name] %>" />
   <% end -%>
 <% end -%>
